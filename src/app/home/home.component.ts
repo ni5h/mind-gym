@@ -11,7 +11,7 @@ const GAMES: GameLink[] = [
   { name: 'Skip Counting', path: '/skip-counting' },
   { name: 'KenKen', path: '/kenken' },
   { name: 'Number Pyramid', path: '/number-pyramid' },
-  { name: 'Magic Square', path: null },
+  { name: 'Magic Square', path: '/magic-square' },
   { name: 'Four 4s', path: null },
 ];
 

@@ -27,4 +27,9 @@ export const routes: Routes = [
         (m) => m.NumberPyramidComponent,
       ),
   },
+  {
+    path: 'magic-square',
+    loadComponent: () =>
+      import('./games/magic-square/magic-square.component').then((m) => m.MagicSquareComponent),
+  },
 ];
