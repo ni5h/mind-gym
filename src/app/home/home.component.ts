@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 
 interface GameLink {
   name: string;
-  path: string | null;
+  path: string;
 }
 
 const GAMES: GameLink[] = [
@@ -20,24 +20,16 @@ const GAMES: GameLink[] = [
   standalone: true,
   imports: [RouterLink],
   template: `
-    <div class="max-w-xl mx-auto p-6">
-      <h1 class="text-2xl font-bold text-gray-800 mb-6">Mind Gym</h1>
-      <div class="grid grid-cols-2 gap-4">
+    <div class="max-w-2xl mx-auto p-6">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6">Pick a game to play</h1>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
         @for (game of games; track game.name) {
-          @if (game.path) {
-            <a
-              [routerLink]="game.path"
-              class="text-lg font-semibold py-6 text-center rounded-xl bg-indigo-50 hover:bg-indigo-100 transition"
-            >
-              {{ game.name }}
-            </a>
-          } @else {
-            <span
-              class="text-lg font-semibold py-6 text-center rounded-xl bg-gray-50 text-gray-400"
-            >
-              {{ game.name }}<br /><span class="text-xs">coming soon</span>
-            </span>
-          }
+          <a
+            [routerLink]="game.path"
+            class="text-lg font-semibold py-6 text-center rounded-xl bg-indigo-50 hover:bg-indigo-100 transition"
+          >
+            {{ game.name }}
+          </a>
         }
       </div>
 
