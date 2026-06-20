@@ -12,7 +12,7 @@ const GAMES: GameLink[] = [
   { name: 'KenKen', path: '/kenken' },
   { name: 'Number Pyramid', path: '/number-pyramid' },
   { name: 'Magic Square', path: '/magic-square' },
-  { name: 'Four 4s', path: null },
+  { name: 'Four 4s', path: '/four-fours' },
 ];
 
 @Component({

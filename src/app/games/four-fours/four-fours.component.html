@@ -1,0 +1,88 @@
+<app-game-shell
+  gameTitle="Four 4s"
+  [tier]="tier()"
+  [totalTiers]="totalTiers"
+  [streak]="streak()"
+  [running]="isAnswering()"
+  [feedback]="feedback()"
+>
+  <p class="text-center text-gray-500 mb-2">
+    Use all four {{ puzzle().digits[0] }}s to make {{ puzzle().target }}.
+  </p>
+
+  <div class="min-h-14 flex items-center justify-center gap-1 mb-1 text-2xl font-bold flex-wrap">
+    @for (token of tokens(); track $index) {
+      <span>{{ token }}</span>
+    }
+    @if (tokens().length === 0) {
+      <span class="text-base text-gray-300">Tap digits and operators below</span>
+    }
+  </div>
+
+  <p class="text-center text-gray-400 text-sm mb-6 h-5">
+    @if (previewValue() !== null) {
+      = {{ previewValue() }}
+    }
+  </p>
+
+  <div class="flex justify-center gap-2 mb-4">
+    @for (digit of puzzle().digits; track $index) {
+      <button
+        type="button"
+        class="w-12 h-12 rounded-lg bg-indigo-50 hover:bg-indigo-100 font-bold text-lg disabled:opacity-30"
+        [disabled]="!canAddDigit($index)"
+        (click)="addDigit($index)"
+      >
+        {{ digit }}
+      </button>
+    }
+  </div>
+
+  <div class="flex justify-center gap-2 mb-4">
+    @for (op of operators(); track op) {
+      <button
+        type="button"
+        class="w-12 h-12 rounded-lg bg-amber-50 hover:bg-amber-100 font-bold text-lg disabled:opacity-30"
+        [disabled]="!canAddOperator()"
+        (click)="addOperator(op)"
+      >
+        {{ op }}
+      </button>
+    }
+    <button
+      type="button"
+      class="w-12 h-12 rounded-lg bg-gray-50 hover:bg-gray-100 font-bold text-lg disabled:opacity-30"
+      [disabled]="!canAddOpenParen()"
+      (click)="addOpenParen()"
+    >
+      (
+    </button>
+    <button
+      type="button"
+      class="w-12 h-12 rounded-lg bg-gray-50 hover:bg-gray-100 font-bold text-lg disabled:opacity-30"
+      [disabled]="!canAddCloseParen()"
+      (click)="addCloseParen()"
+    >
+      )
+    </button>
+  </div>
+
+  <div class="flex justify-center gap-3">
+    <button
+      type="button"
+      class="px-4 py-2 rounded-lg bg-gray-100 disabled:opacity-40"
+      [disabled]="!isAnswering() || tokens().length === 0"
+      (click)="undo()"
+    >
+      Undo
+    </button>
+    <button
+      type="button"
+      class="px-6 py-3 rounded-xl bg-indigo-500 text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+      [disabled]="!canSubmit()"
+      (click)="submit()"
+    >
+      Check
+    </button>
+  </div>
+</app-game-shell>

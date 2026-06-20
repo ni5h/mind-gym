@@ -32,4 +32,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./games/magic-square/magic-square.component').then((m) => m.MagicSquareComponent),
   },
+  {
+    path: 'four-fours',
+    loadComponent: () =>
+      import('./games/four-fours/four-fours.component').then((m) => m.FourFoursComponent),
+  },
 ];
