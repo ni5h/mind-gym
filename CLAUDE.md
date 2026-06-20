@@ -54,10 +54,12 @@ npm run build
 - Verified end-to-end in a real browser (Playwright against `ng serve`): puzzle generation, answer validation, feedback overlay, streak/tier display, no console errors
 
 - **Phase 2 complete**: shared `NumberInputComponent` (plain input/output, not `model()` — needed for binding against array-signal slots like `answers()[i]`), **Skip Counting** (`skip-counting.engine.ts` + component). Tier 1 single blank at the end, Tier 2 single blank in the middle, Tier 3 two non-adjacent blanks with larger steps. Index 0 of the sequence is never blanked by design, so `validate()` can always recover true values from `sequence[0] + idx * step` without storing hidden state.
+- **Phase 3 complete**: **KenKen** (`kenken.engine.ts` + component). Generation is grid-first: a randomized valid Latin square (cyclic base grid, then row/column shuffle + value relabelling — all validity-preserving), then cages are overlaid via randomized contiguous region growing, then each cage's operation/target is derived from the actual grid values (filtered to the tier's allowed ops; `÷` only offered when evenly divisible). Single-cell cages are rendered as pre-filled "givens", matching classic KenKen convention. `validate()` checks row/column uniqueness + cage math directly against the player's grid — it does **not** compare to the generation grid, since a cage layout can have more than one valid fill and any of them should count as correct. Verified with a standalone backtracking solver (60 trials across all 3 tiers): every generated puzzle was solvable and the validator accepted the found solution.
 
 ### Notes for future games
-- Kakooma's tier `targetTimeMs` values (10s/15s/20s) are placeholder guesses — tune once there's real play data from Neo. Same for Skip Counting (8s/12s/20s).
-- `KakoomaEngine` rejects generated groups with more than one valid sum/product relationship (ambiguous puzzles) and retries — same care is worth taking in KenKen and Four 4s generation.
+- Kakooma's tier `targetTimeMs` values (10s/15s/20s) are placeholder guesses — tune once there's real play data from Neo. Same for Skip Counting (8s/12s/20s) and KenKen (25s/50s/90s).
+- `KakoomaEngine` rejects generated groups with more than one valid sum/product relationship (ambiguous puzzles) and retries — same care is worth taking in Four 4s generation.
+- Dynamic Tailwind classes built via template-string interpolation (e.g. `` `border-${side}-2` ``) don't get picked up by Tailwind's static scanner — they silently produce no CSS. `kenken.component.ts`'s `sideBorder()` works around this with a literal lookup table. Keep this in mind for Number Pyramid / Magic Square grid rendering.
 
 ### Next
-- KenKen (Phase 3 — expect this to take longest, grid generation)
+- Number Pyramid (Phase 4)

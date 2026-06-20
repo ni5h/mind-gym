@@ -16,4 +16,8 @@ export const routes: Routes = [
         (m) => m.SkipCountingComponent,
       ),
   },
+  {
+    path: 'kenken',
+    loadComponent: () => import('./games/kenken/kenken.component').then((m) => m.KenKenComponent),
+  },
 ];

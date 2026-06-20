@@ -1,0 +1,57 @@
+<app-game-shell
+  gameTitle="KenKen"
+  [tier]="tier()"
+  [totalTiers]="totalTiers"
+  [streak]="streak()"
+  [running]="isAnswering()"
+  [feedback]="feedback()"
+>
+  <p class="text-center text-gray-500 mb-6">
+    Fill the grid 1–{{ puzzle().gridSize }} with no repeats in any row or column, matching each
+    cage's target.
+  </p>
+
+  <div
+    class="grid mx-auto mb-6"
+    [style.gridTemplateColumns]="gridColumnsStyle()"
+    [style.width.px]="puzzle().gridSize * 56"
+  >
+    @for (row of cellViewModels(); track $index) {
+      @for (cell of row; track $index) {
+        <div
+          class="relative w-14 h-14 flex items-center justify-center bg-white"
+          [class]="cell.borderClasses"
+        >
+          @if (cell.label) {
+            <span class="absolute top-0.5 left-1 text-[10px] font-semibold text-gray-500">{{
+              cell.label
+            }}</span>
+          }
+          @if (cell.isGiven) {
+            <span class="text-lg font-bold text-gray-700">{{ cell.givenValue }}</span>
+          } @else {
+            <input
+              type="number"
+              inputmode="numeric"
+              class="w-full h-full text-center text-lg font-bold focus:outline-none disabled:opacity-50"
+              [value]="answer()[cell.row][cell.col] ?? ''"
+              [disabled]="!isAnswering()"
+              (input)="onCellInput(cell.row, cell.col, $event)"
+            />
+          }
+        </div>
+      }
+    }
+  </div>
+
+  <div class="text-center">
+    <button
+      type="button"
+      class="px-6 py-3 rounded-xl bg-indigo-500 text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+      [disabled]="!canSubmit()"
+      (click)="submit()"
+    >
+      Check
+    </button>
+  </div>
+</app-game-shell>
