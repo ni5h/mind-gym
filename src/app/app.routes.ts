@@ -37,4 +37,23 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./games/four-fours/four-fours.component').then((m) => m.FourFoursComponent),
   },
+  {
+    path: 'puzzle-vault',
+    loadComponent: () =>
+      import('./puzzle-vault/vault-home/vault-home.component').then((m) => m.VaultHomeComponent),
+  },
+  {
+    path: 'puzzle-vault/:category',
+    loadComponent: () =>
+      import('./puzzle-vault/category-list/category-list.component').then(
+        (m) => m.CategoryListComponent,
+      ),
+  },
+  {
+    path: 'puzzle-vault/:category/:id',
+    loadComponent: () =>
+      import('./puzzle-vault/puzzle-detail/puzzle-detail.component').then(
+        (m) => m.PuzzleDetailComponent,
+      ),
+  },
 ];

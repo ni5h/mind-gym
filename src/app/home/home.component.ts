@@ -40,6 +40,14 @@ const GAMES: GameLink[] = [
           }
         }
       </div>
+
+      <h2 class="text-lg font-bold text-gray-800 mt-8 mb-3">Puzzle Vault</h2>
+      <a
+        routerLink="/puzzle-vault"
+        class="block text-center py-6 rounded-xl bg-amber-50 hover:bg-amber-100 transition font-semibold text-gray-700"
+      >
+        Browse classic lateral-thinking puzzles
+      </a>
     </div>
   `,
 })
