@@ -20,6 +20,8 @@ src/app/
   games/
     kakooma/  skip-counting/  kenken/  number-pyramid/  magic-square/  four-fours/
   puzzle-vault/
+  layout/
+    sidebar/    (persistent app-shell nav — see "Persistent sidebar" note below)
   core/
     services/   (difficulty-engine.service.ts, progress-store.service.ts)
     models/
@@ -34,6 +36,14 @@ Each game folder is self-contained: its own generator + validator conforming to 
 npm start      # ng serve, http://localhost:4200
 npm run build
 ```
+
+## Deployment
+
+- **Repo**: https://github.com/ni5h/mind-gym — **public**. GitHub Pages does not support private repos on the free plan ("Your current plan does not support GitHub Pages for this repository" from the API), so the repo was switched from private to public specifically to enable free hosting. Source code and the live app are both publicly reachable; no secrets live in the repo.
+- **Live site**: https://ni5h.github.io/mind-gym/
+- **Auto-deploys on every push to `main`** via `.github/workflows/deploy.yml`: `npx ng build --configuration production --base-href /mind-gym/`, then copies `index.html` → `404.html` (GitHub Pages has no server-side routing, so without this, direct/refreshed deep links like `/kakooma` 404 instead of letting the Angular router handle them client-side — verified working against the live site), then publishes via `actions/upload-pages-artifact` + `actions/deploy-pages`.
+- Pages is configured with `build_type: workflow` (the modern Actions-based source, not the legacy "deploy from a branch" method) — set via `gh api -X POST repos/ni5h/mind-gym/pages -f build_type=workflow` once a token with **Pages: write** + **Administration: write** repo permissions was available. Fine-grained PATs reliably cannot create new repos (no exposed permission for it, by design) — that part was always going to need a manual step in the GitHub UI, regardless of token scope.
+- `gh` CLI is installed at `~/.local/bin/gh` (standalone binary, no sudo — this machine has no passwordless sudo) and authenticated via a fine-grained PAT stored in its own credential store. Git push/pull itself goes through the user's SSH key (already registered with GitHub before this project), not the PAT.
 
 ## Build Order (see brief §10 for full detail)
 
