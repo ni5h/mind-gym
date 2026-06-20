@@ -1,0 +1,25 @@
+<app-game-shell
+  gameTitle="Kakooma"
+  [tier]="tier()"
+  [totalTiers]="totalTiers"
+  [streak]="streak()"
+  [running]="isAnswering()"
+  [feedback]="feedback()"
+>
+  <p class="text-center text-gray-500 mb-6">
+    Tap the number that's the {{ puzzle().operation === 'add' ? 'sum' : 'product' }} of two
+    others.
+  </p>
+  <div class="grid grid-cols-2 gap-4">
+    @for (n of puzzle().numbers; track $index) {
+      <button
+        type="button"
+        class="text-2xl font-bold py-6 rounded-xl bg-indigo-50 hover:bg-indigo-100 active:scale-95 transition disabled:opacity-50"
+        [disabled]="!isAnswering()"
+        (click)="select($index)"
+      >
+        {{ n }}
+      </button>
+    }
+  </div>
+</app-game-shell>

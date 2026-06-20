@@ -49,11 +49,13 @@ npm run build
 
 ### Done
 - Repo initialized, Angular 21 app scaffolded at root, Tailwind v4 wired in
-- Folder structure created per brief §9 (empty, placeholder `.gitkeep` files)
+- Folder structure created per brief §9
+- **Phase 1 complete**: `core/models` (`ChildProfile`, `GameProgress`, `Attempt`, `TierConfig`, `PuzzleGame<TPuzzle, TAnswer>`, `PuzzleVaultProgress` reserved), `ProgressStoreService` (localStorage, keyed by profile), `DifficultyEngineService` (pure promote/demote logic per brief §5), shared chrome (`TimerDisplayComponent`, `FeedbackToastComponent`, `GameShellComponent`), **Kakooma** (`kakooma.engine.ts` generator/validator + `kakooma.component.ts`), `HomeComponent` with game grid (other games shown as "coming soon"), routing wired (`/`, `/kakooma`, both lazy-loaded)
+- Verified end-to-end in a real browser (Playwright against `ng serve`): puzzle generation, answer validation, feedback overlay, streak/tier display, no console errors
+
+### Notes for future games
+- Kakooma's tier `targetTimeMs` values (10s/15s/20s) are placeholder guesses — tune once there's real play data from Neo.
+- `KakoomaEngine` rejects generated groups with more than one valid sum/product relationship (ambiguous puzzles) and retries — same care is worth taking in KenKen and Four 4s generation.
 
 ### Next
-- Build the `PuzzleGame` shared interface and `core/models` entities (`ChildProfile`, `GameProgress`, `Attempt`, `PuzzleVaultProgress` — see brief §8)
-- Build Progress Store service (localStorage-backed, keyed by child profile)
-- Build Adaptive Difficulty Service (per-game rolling window, promote/demote rules — brief §5)
-- Build Game Shell component (shared chrome: timer, input, feedback, tier/streak indicator)
-- Build Kakooma (first game)
+- Skip Counting (Phase 2)
