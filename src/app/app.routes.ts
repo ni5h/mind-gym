@@ -9,4 +9,11 @@ export const routes: Routes = [
     path: 'kakooma',
     loadComponent: () => import('./games/kakooma/kakooma.component').then((m) => m.KakoomaComponent),
   },
+  {
+    path: 'skip-counting',
+    loadComponent: () =>
+      import('./games/skip-counting/skip-counting.component').then(
+        (m) => m.SkipCountingComponent,
+      ),
+  },
 ];

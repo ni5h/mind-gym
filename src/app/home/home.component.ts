@@ -8,7 +8,7 @@ interface GameLink {
 
 const GAMES: GameLink[] = [
   { name: 'Kakooma', path: '/kakooma' },
-  { name: 'Skip Counting', path: null },
+  { name: 'Skip Counting', path: '/skip-counting' },
   { name: 'KenKen', path: null },
   { name: 'Number Pyramid', path: null },
   { name: 'Magic Square', path: null },

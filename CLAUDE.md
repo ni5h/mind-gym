@@ -53,9 +53,11 @@ npm run build
 - **Phase 1 complete**: `core/models` (`ChildProfile`, `GameProgress`, `Attempt`, `TierConfig`, `PuzzleGame<TPuzzle, TAnswer>`, `PuzzleVaultProgress` reserved), `ProgressStoreService` (localStorage, keyed by profile), `DifficultyEngineService` (pure promote/demote logic per brief §5), shared chrome (`TimerDisplayComponent`, `FeedbackToastComponent`, `GameShellComponent`), **Kakooma** (`kakooma.engine.ts` generator/validator + `kakooma.component.ts`), `HomeComponent` with game grid (other games shown as "coming soon"), routing wired (`/`, `/kakooma`, both lazy-loaded)
 - Verified end-to-end in a real browser (Playwright against `ng serve`): puzzle generation, answer validation, feedback overlay, streak/tier display, no console errors
 
+- **Phase 2 complete**: shared `NumberInputComponent` (plain input/output, not `model()` — needed for binding against array-signal slots like `answers()[i]`), **Skip Counting** (`skip-counting.engine.ts` + component). Tier 1 single blank at the end, Tier 2 single blank in the middle, Tier 3 two non-adjacent blanks with larger steps. Index 0 of the sequence is never blanked by design, so `validate()` can always recover true values from `sequence[0] + idx * step` without storing hidden state.
+
 ### Notes for future games
-- Kakooma's tier `targetTimeMs` values (10s/15s/20s) are placeholder guesses — tune once there's real play data from Neo.
+- Kakooma's tier `targetTimeMs` values (10s/15s/20s) are placeholder guesses — tune once there's real play data from Neo. Same for Skip Counting (8s/12s/20s).
 - `KakoomaEngine` rejects generated groups with more than one valid sum/product relationship (ambiguous puzzles) and retries — same care is worth taking in KenKen and Four 4s generation.
 
 ### Next
-- Skip Counting (Phase 2)
+- KenKen (Phase 3 — expect this to take longest, grid generation)
