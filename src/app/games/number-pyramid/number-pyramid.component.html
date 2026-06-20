@@ -1,0 +1,53 @@
+<app-game-shell
+  gameTitle="Number Pyramid"
+  [tier]="tier()"
+  [totalTiers]="totalTiers"
+  [streak]="streak()"
+  [running]="isAnswering()"
+  [feedback]="feedback()"
+>
+  <p class="text-center text-gray-500 mb-6">
+    @if (puzzle().mode === 'forward') {
+      Each brick is the sum of the two bricks below it. Fill in the missing bricks.
+    } @else {
+      You know everything except some base bricks — work backward to find them.
+    }
+  </p>
+
+  <div class="flex flex-col items-center gap-2 mb-6">
+    @for (row of displayRows(); track $index) {
+      <div class="flex gap-2">
+        @for (cell of row; track $index) {
+          <div
+            class="relative w-14 h-14 flex items-center justify-center rounded-lg"
+            [class]="cell.isGiven ? 'bg-gray-50' : 'bg-white border-2 border-indigo-200'"
+          >
+            @if (cell.isGiven) {
+              <span class="text-lg font-bold text-gray-700">{{ cell.givenValue }}</span>
+            } @else {
+              <input
+                type="number"
+                inputmode="numeric"
+                class="w-full h-full text-center text-lg font-bold bg-transparent focus:outline-none disabled:opacity-50"
+                [value]="answer()[cell.row][cell.col] ?? ''"
+                [disabled]="!isAnswering()"
+                (input)="onCellInput(cell.row, cell.col, $event)"
+              />
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="text-center">
+    <button
+      type="button"
+      class="px-6 py-3 rounded-xl bg-indigo-500 text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+      [disabled]="!canSubmit()"
+      (click)="submit()"
+    >
+      Check
+    </button>
+  </div>
+</app-game-shell>

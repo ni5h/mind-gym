@@ -20,4 +20,11 @@ export const routes: Routes = [
     path: 'kenken',
     loadComponent: () => import('./games/kenken/kenken.component').then((m) => m.KenKenComponent),
   },
+  {
+    path: 'number-pyramid',
+    loadComponent: () =>
+      import('./games/number-pyramid/number-pyramid.component').then(
+        (m) => m.NumberPyramidComponent,
+      ),
+  },
 ];
